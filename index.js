@@ -107,7 +107,7 @@ VMRun.prototype.setOptions = function (options) {
     options = options || {};
     var opts = {};
     opts.vmrunPath = (options.vmrunPath || typeof options.vmrunPath === 'string')
-        ? options.vmrunPath
+        ? escapeArg(options.vmrunPath)
         : "vmrun";
     opts.hostName = options.hostName || false;
     opts.hostPort = options.hostPort || false;
