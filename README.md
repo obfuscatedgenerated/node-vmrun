@@ -78,6 +78,8 @@ Options for configuring VMRun are:
 
 Host types are:
 * 'ws' = VMWare Workstation
+* 'player' = VMWare Workstation Player
+* 'fusion' = VMWare Fusion
 * 'server1' = VMWare Server 1.0
 * 'server' = VMWare Server 2.0
 * 'ws-shared' = VMWare Workstation (Shared Mode)
