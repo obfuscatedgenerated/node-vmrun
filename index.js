@@ -32,8 +32,10 @@ var VMWareHostType = {
     SERVER1: 'server1'
     , SERVER2: 'server'
     , WORKSTATION: 'ws'
+    , PLAYER: 'player'
     , WORKSTATION_SHARED: 'ws-shared'
     , ESX: 'esx'
+    , FUSION: 'fusion'
     , VCENTER_SERVER: 'vc'
 };
 
@@ -47,6 +49,12 @@ var resolveHostType = function (type) {
         case 'ws':
         case 'workstation':
             return VMWareHostType.WORKSTATION;
+            
+        case 'player':
+            return VMWareHostType.PLAYER;
+        
+        case 'fusion':
+            return VMWareHostType.FUSION;
 
         case 'server1': return VMWareHostType.SERVER1;
         case 'server':
