@@ -66,7 +66,7 @@ VMRun
 ```
 
 Options for configuring VMRun are:
-* {String?} vmrunPath
+* {String?} vmrunPath (you may need to add quotes if your path has a space)
 * {String?} hostName
 * {Number?} hostPort
 * {VMWareHostType?} hostType
