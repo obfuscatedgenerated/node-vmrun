@@ -92,6 +92,7 @@ var VMRun = function () {};
 /**
  *
  * @param {Object?} options
+ * @param {String?} options.vmrunPath
  * @param {String?} options.hostName
  * @param {Number?} options.hostPort
  * @param {VMWareHostType?} options.hostType
@@ -105,6 +106,9 @@ var VMRun = function () {};
 VMRun.prototype.setOptions = function (options) {
     options = options || {};
     var opts = {};
+    opts.vmrunPath = (options.vmrunPath || typeof options.vmrunPath === 'string')
+        ? options.vmrunPath
+        : "vmrun";
     opts.hostName = options.hostName || false;
     opts.hostPort = options.hostPort || false;
     opts.hostType = resolveHostType(options.hostType);
@@ -123,6 +127,7 @@ VMRun.prototype.setOptions = function (options) {
 
 /**
  * @typedef {Object} VMRunOptions
+ * @property {String|undefined} vmrunPath?
  * @property {String|undefined} hostName?
  * @property {String|Number|undefined} hostPort?
  * @property {VMWareHostType|undefined} hostType?
@@ -207,7 +212,7 @@ VMRun.vmrunWithOptions = function (command, args, options) {
 
     return new Promise(function (resolve, reject) {
 
-        child_process.exec('vmrun' + ' ' + runArgs.join(' '), {}, function (err, stdout, stderr) {
+        child_process.exec(options.vmrunPath + ' ' + runArgs.join(' '), {}, function (err, stdout, stderr) {
 
             if (err) {
                 if (/^Error: /.test(stderr || stdout)) {
