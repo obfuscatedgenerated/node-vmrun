@@ -216,7 +216,7 @@ VMRun.vmrunWithOptions = function (command, args, options, unesc_args) {
     }
 
     if (unesc_args) {
-        runArgs.concat(unesc_args);
+        runArgs = runArgs.concat(unesc_args);
     }
 
     if (VMRun.debug) {
