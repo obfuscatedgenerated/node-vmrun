@@ -174,9 +174,10 @@ VMRun.prototype.withModifiedOptions = function (options) {
  * @param {String} command
  * @param {[String]?} args
  * @param {VMRunOptions?} options
+ * @param {[String]?} unesc_args
  * @returns {Promise<{stdout, stderr}>}
  */
-VMRun.vmrunWithOptions = function (command, args, options) {
+VMRun.vmrunWithOptions = function (command, args, options, unesc_args) {
 
     var runArgs = [];
 
@@ -214,6 +215,10 @@ VMRun.vmrunWithOptions = function (command, args, options) {
         runArgs[i] = escapeArg(runArgs[i]);
     }
 
+    if (unesc_args) {
+        runArgs.concat(unesc_args);
+    }
+
     if (VMRun.debug) {
         console.warn('$ vmrun ' + runArgs.join(' '));
     }
@@ -240,10 +245,11 @@ VMRun.vmrunWithOptions = function (command, args, options) {
  * Call a VMRun command
  * @param {String} command
  * @param {[String]?} args
+ * @param {[String]?} unesc_args
  * @returns {Promise<{stdout, stderr}>}
  */
-VMRun.prototype.vmrun = function (command, args) {
-    return VMRun.vmrunWithOptions(command, args, this._options);
+VMRun.prototype.vmrun = function (command, args, unesc_args) {
+    return VMRun.vmrunWithOptions(command, args, this._options, unesc_args);
 };
 
 /**
@@ -388,9 +394,10 @@ VMRun.prototype.revertToSnapshot = function (vmxFile, snapshotName) {
  * @param {Boolean} options.noWait=false
  * @param {Boolean} options.activeWindow=false
  * @param {Boolean} options.interactive=false
+ * @param {[String]?} unesc_args
  * @returns {Promise.<{stdout, stderr}>}
  */
-VMRun.prototype.runProgramInGuest = function (vmxFile, pathToProgram, programArgs, options) {
+VMRun.prototype.runProgramInGuest = function (vmxFile, pathToProgram, programArgs, options, unesc_args) {
     var args = [vmxFile];
     if (options) {
         if (options.noWait) {
@@ -407,7 +414,7 @@ VMRun.prototype.runProgramInGuest = function (vmxFile, pathToProgram, programArg
     if (programArgs) {
         args = args.concat(programArgs);
     }
-    return this.vmrun('runProgramInGuest', args);
+    return this.vmrun('runProgramInGuest', args, unesc_args);
 };
 
 /**
